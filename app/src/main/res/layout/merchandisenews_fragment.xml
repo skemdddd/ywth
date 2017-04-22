@@ -172,37 +172,7 @@
                 android:layout_marginRight="14dp"
                 android:src="@mipmap/personal_enter"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/feedback_rlyt"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:layout_marginTop="11dp"
-            android:background="@drawable/ll_customer_selector"
-            android:clickable="true"
-        >
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="28dp"
-                android:layout_marginStart="12dp"
-                android:text="选择商品颜色"
-                android:textColor="#333"
-                android:textSize="13sp"/>
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="14dp"
-                android:layout_marginRight="14dp"
-                android:src="@mipmap/personal_enter"/>
-        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

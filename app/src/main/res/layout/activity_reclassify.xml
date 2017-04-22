@@ -5,18 +5,18 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.example.dddkj.ywtx.Widget.Titlebar
+    <com.example.dddkj.ypth.Widget.Titlebar
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.example.dddkj.ywtx.Widget.Titlebar>
+    </com.example.dddkj.ypth.Widget.Titlebar>
 
-    <com.example.dddkj.ywtx.utils.ProgressActivity
+    <com.example.dddkj.ypth.utils.ProgressActivity
     android:id="@+id/progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.dddkj.ywtx.Widget.MyScrollview
+    <com.example.dddkj.ypth.Widget.MyScrollview
         android:id="@+id/qwe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,8 +75,8 @@
 
         </LinearLayout>
 
-    </com.example.dddkj.ywtx.Widget.MyScrollview>
+    </com.example.dddkj.ypth.Widget.MyScrollview>
 
 
-</com.example.dddkj.ywtx.utils.ProgressActivity>
+</com.example.dddkj.ypth.utils.ProgressActivity>
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:layout_height="13.5dp"
         android:background="@color/loginBackground">
     </View>
-    <com.example.dddkj.ywtx.utils.ProgressActivity
+    <com.example.dddkj.ypth.utils.ProgressActivity
         android:id="@+id/ProgressActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,7 +26,7 @@
 
         </android.support.v7.widget.RecyclerView>
 
-    </com.example.dddkj.ywtx.utils.ProgressActivity>
+    </com.example.dddkj.ypth.utils.ProgressActivity>
 
 
 </LinearLayout>

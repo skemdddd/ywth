@@ -12,7 +12,9 @@
     <color name="moneyText">#d0222a</color>
     <color name="halving">#eaeaea</color>\
     <color name="black">#000000</color>
+    <color name="blacktext">#454545</color>
     <color name="classifylift">#F8F8F8</color>
+    <color name="gray">#a6a6a6</color>
 <!--图片点击效果-->
     <color name="clear">#00000000</color>
     <color name="block">#60000000</color>

@@ -3,11 +3,11 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.example.dddkj.ywtx.Widget.Titlebar
+    <com.example.dddkj.ypth.Widget.Titlebar
         android:id="@+id/Titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </com.example.dddkj.ywtx.Widget.Titlebar>
+    </com.example.dddkj.ypth.Widget.Titlebar>
     <android.support.design.widget.TabLayout
         android:background="@color/white"
         android:id="@+id/TabLayout"
@@ -19,7 +19,7 @@
         android:layout_height="13.5dp"
         android:background="@color/loginBackground">
     </View>
-    <com.example.dddkj.ywtx.utils.ProgressActivity
+    <com.example.dddkj.ypth.utils.ProgressActivity
         android:id="@+id/ProgressActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,7 +30,7 @@
 
         </android.support.v7.widget.RecyclerView>
 
-    </com.example.dddkj.ywtx.utils.ProgressActivity>
+    </com.example.dddkj.ypth.utils.ProgressActivity>
 
 
 </LinearLayout>

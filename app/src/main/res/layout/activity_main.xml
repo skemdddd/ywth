@@ -40,6 +40,7 @@
                 android:drawableTop="@drawable/tab_img_classify_press"
                 android:text="分类" />
             <RadioButton
+
                 android:id="@+id/shopTab_rdoBtn"
                 style="@style/RadioButtonBottomTab"
                 android:drawableTop="@drawable/tab_img_shop_press"

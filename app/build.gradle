@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.example.dddkj.ywtx"
+        applicationId "com.example.dddkj.ypth"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -66,13 +66,15 @@ dependencies {
     compile 'com.bm.photoview:library:1.4.1'
     compile 'com.github.w446108264:ScrollableLayout:1.0.3'
 //    流式布局
-    compile 'cn.lankton:flowlayout:3.1.0'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
 //  弹窗
     compile 'com.github.f0ris.sweetalert:library:1.5'
 //    头像裁剪
     compile 'com.yalantis:ucrop:2.2.0'
-
+//    圆角图片
+    compile 'com.github.jj3341332:RoundImageView:1.0'
 //    权限
+    compile 'ren.qinc.numberbutton:numberbutton:0.0.1'
     compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
 }

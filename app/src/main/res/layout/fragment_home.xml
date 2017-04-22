@@ -29,7 +29,7 @@
 
             android:layout_alignTop="@+id/image_log" android:layout_centerHorizontal="true"/>
     </RelativeLayout>
-    <com.example.dddkj.ywtx.Widget.MyScrollview
+    <com.example.dddkj.ypth.Widget.MyScrollview
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
@@ -221,7 +221,7 @@
 
         </LinearLayout>
 
-    </com.example.dddkj.ywtx.Widget.MyScrollview>
+    </com.example.dddkj.ypth.Widget.MyScrollview>
 
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.example.dddkj.ywtx">
+          package="com.example.dddkj.ypth">
 
     <!--<uses-permission android:name="android.permission.INTERNET"/>-->
     <!--<uses-permission android:name="android.permission.CALL_PHONE"/>-->
@@ -35,7 +35,7 @@
 
     <application
 
-        android:name=".MyApplication.MyApplication"
+        android:name="com.example.dddkj.ypth.MyApplication.MyApplication"
         android:allowBackup="true"
         android:exported="true"
         android:icon="@mipmap/icon"
@@ -43,103 +43,103 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.dddkj.ypth.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LoginAcivity"
+            android:name="com.example.dddkj.ypth.ui.LoginAcivity"
             android:label="登陆">
 
         </activity>
         <activity
 
-            android:name=".ui.ClassificAtiondetailsActivity"
+            android:name="com.example.dddkj.ypth.ui.ClassificAtiondetailsActivity"
             android:label="首页二级分类详情1">
 
         </activity>
         <activity
-            android:name=".ui.TertiaryDetailsActivity"
+            android:name="com.example.dddkj.ypth.ui.TertiaryDetailsActivity"
             android:label="首页三级分类详情1">
 
         </activity>
         <activity
-            android:name=".ui.ClassifySortActivity">
+            android:name="com.example.dddkj.ypth.ui.ClassifySortActivity">
 
         </activity>
         <activity
-            android:name=".ui.MerchandiseNewsActivity"
+            android:name="com.example.dddkj.ypth.ui.MerchandiseNewsActivity"
             android:label="商品详情">
 
         </activity>
 
         <activity
-            android:name=".ui.AllCommentsActivity"
+            android:name="com.example.dddkj.ypth.ui.AllCommentsActivity"
             android:label="全部评论">
 
         </activity>
         <activity
-            android:name=".ui.EnterStoreActivity"
+            android:name="com.example.dddkj.ypth.ui.EnterStoreActivity"
             android:label="进入店铺">
 
         </activity>
         <activity
-            android:name=".ui.AboutStoreActivity"
+            android:name="com.example.dddkj.ypth.ui.AboutStoreActivity"
             android:label="店铺介绍">
 
         </activity>
         <activity
-            android:name=".ui.AllShopActivity"
+            android:name="com.example.dddkj.ypth.ui.AllShopActivity"
             android:label="全部商品">
         </activity>
         <activity
-            android:name=".ui.ShopAllGoodsActivity"
+            android:name="com.example.dddkj.ypth.ui.ShopAllGoodsActivity"
             android:label="店铺全部商品">
 
         </activity>
         <activity
-            android:name=".ui.SearchGoodsActivity"
+            android:name="com.example.dddkj.ypth.ui.SearchGoodsActivity"
             android:label="店铺搜索">
 
         </activity>
         <activity
-            android:name=".ui.SearchGoodsListActivity"
+            android:name="com.example.dddkj.ypth.ui.SearchGoodsListActivity"
             android:label="店铺搜索列表">
 
         </activity>
         <activity
-            android:name=".ui.DeliveryAddrssActivity"
+            android:name="com.example.dddkj.ypth.ui.DeliveryAddrssActivity"
             android:label="地址管理">
 
         </activity>
         <activity
-            android:name=".ui.EditShippingAddressActivity"
+            android:name="com.example.dddkj.ypth.ui.EditShippingAddressActivity"
             android:label="编辑收货地址">
 
         </activity>
         <activity
-            android:name=".ui.AreaSelectActivity"
+            android:name="com.example.dddkj.ypth.ui.AreaSelectActivity"
             android:label="地址增加">
 
         </activity>
         <activity
-            android:name=".ui.MyCollection"
+            android:name="com.example.dddkj.ypth.ui.MyCollection"
             android:label="我的收藏">
         </activity>
         <activity
-            android:name=".ui.PersonalSettingActivity"
+            android:name="com.example.dddkj.ypth.ui.PersonalSettingActivity"
             android:label="个人中心">
 
         </activity>
         <activity
-            android:name=".ui.MyCoupons"
+            android:name="com.example.dddkj.ypth.ui.MyCoupons"
             android:label="我的优惠券">
 
         </activity>
         <activity
-            android:name=".ui.CouponHistoryActivity"
+            android:name="com.example.dddkj.ypth.ui.CouponHistoryActivity"
             android:label="优惠券历史">
         </activity>
         <activity

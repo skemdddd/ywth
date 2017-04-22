@@ -7,44 +7,109 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark">
-
-        <TextView
+        <ImageView
+            android:id="@+id/image_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@mipmap/personal_message"/>
+        <ImageView
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="购物车"
-            android:textColor="@color/titleText"
-            android:textSize="18sp"
-            android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+            android:src="@mipmap/home_page_words"
+
+            android:layout_alignTop="@+id/image_log" android:layout_centerHorizontal="true"/>
     </RelativeLayout>
-    <ImageView
-        android:background="@mipmap/sdsdds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true" android:layout_centerHorizontal="true"
-        android:id="@+id/imageView6"/>
-    <TextView
-        android:gravity="center"
-        android:textSize="16sp"
-        android:text="购物车是空的，快去选择心爱的商品吧"
+    <com.example.dddkj.ypth.utils.ProgressActivity
+        android:id="@+id/ProgressActivity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp"
-        android:id="@+id/textView2"/>
-    <ImageButton
-        android:background="@color/transparency"
-        android:src="@mipmap/shop_go"
-        android:text="去逛逛"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/imageView6"
-        android:layout_alignStart="@+id/imageView6"
-        android:layout_marginTop="28dp"
-        android:id="@+id/button"/>
+        android:layout_height="match_parent" android:layout_below="@+id/relativeLayout">
+        <com.example.dddkj.ypth.Widget.SuperExpandableListView
+            android:id="@+id/exListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:childIndicator="@null"
+            android:groupIndicator="@null" android:layout_above="@+id/linearLayout4"
+            android:layout_below="@+id/relativeLayout"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal" android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+            android:id="@+id/linearLayout4">
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/all_chekbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="4dp"
+                    android:button="@drawable/check_box_bg"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center"
+                    android:minHeight="64dp"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="合计:"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥0.00"
+                    android:textColor="#de6838"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#fd7903"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="#FAFAFA" />
+
+            <TextView
+                android:id="@+id/tv_go_to_pay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#dc143c"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="结算(0)"
+                android:textColor="#FAFAFA" />
+        </LinearLayout>
+
+
+    </com.example.dddkj.ypth.utils.ProgressActivity>
+
 
 
 </RelativeLayout>

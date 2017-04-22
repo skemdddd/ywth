@@ -7,7 +7,7 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-    <com.example.dddkj.ywtx.Widget.MySuspensionScrollview
+    <com.example.dddkj.ypth.Widget.MySuspensionScrollview
         android:id="@+id/MyScrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,12 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.example.dddkj.ywtx.Widget.Titlebar
+            <com.example.dddkj.ypth.Widget.Titlebar
                 android:id="@+id/titlebar"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </com.example.dddkj.ywtx.Widget.Titlebar>
+            </com.example.dddkj.ypth.Widget.Titlebar>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                     </android.support.design.widget.TabLayout>
                 </RelativeLayout>
 
-                <com.example.dddkj.ywtx.utils.ProgressActivity
+                <com.example.dddkj.ypth.utils.ProgressActivity
                     android:id="@+id/progressrv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -60,11 +60,11 @@
                         android:focusable="false">
                     </android.support.v7.widget.RecyclerView
                     >
-                </com.example.dddkj.ywtx.utils.ProgressActivity>
+                </com.example.dddkj.ypth.utils.ProgressActivity>
             </LinearLayout>
 
         </LinearLayout>
-    </com.example.dddkj.ywtx.Widget.MySuspensionScrollview>
+    </com.example.dddkj.ypth.Widget.MySuspensionScrollview>
     <LinearLayout
         android:id="@+id/search01"
         android:layout_width="match_parent"
