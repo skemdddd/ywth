@@ -61,14 +61,7 @@ public class ShopPageFragment extends BaseFragment  implements ScrollableHelper.
     @Override
     protected void initListener() {
         initView();
-//        CommoditiesList.addOnItemTouchListener(new OnItemClickListener() {
-//            @Override
-//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent = new Intent(getActivity(),MerchandiseNewsActivity.class);
-//                intent.putExtra("goodsid",getThirdGoogsDatas().get(position).getGId());
-//                startActivity(intent);
-//            }
-//        });
+
 
     }
     protected void initView(){

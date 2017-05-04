@@ -16,6 +16,7 @@ import com.example.dddkj.ypth.Entity.Attributes;
 import com.example.dddkj.ypth.Entity.GoodsInfo;
 import com.example.dddkj.ypth.Entity.StockGoods;
 import com.example.dddkj.ypth.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,7 +127,6 @@ public class GoodsAttrsAdapter extends BaseRecyclerAdapter<Attributes> {
         public void onClick(View v) {
             focusPositionG = positionG;
             focusPositionC = positionC;
-            com.orhanobut.logger.Logger.i("点击   "+positionG +"   "+positionC);
             String value = childrenViews[positionG][positionC].getText().toString();
 
             switch (operation) {
@@ -134,6 +134,7 @@ public class GoodsAttrsAdapter extends BaseRecyclerAdapter<Attributes> {
                     map.put(positionG,Integer.parseInt(childrenid[positionG][positionC]));
                     Map newMap=sortMap(map);
                     for(int i=0;i<stockGoodsList.size();i++){
+                        Logger.i("123"+handleMapParamToString(newMap));
                         if(handleMapParamToString(newMap).equals(stockGoodsList.get(i).getGoodsID())){
                             myInterface.selectedAttribute(handleMapParamToString(newMap),stockGoodsList.get(i).getPrice(),stockGoodsList.get(i).getStock());
                         }

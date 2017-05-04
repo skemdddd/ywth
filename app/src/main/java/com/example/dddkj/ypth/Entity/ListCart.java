@@ -21,6 +21,16 @@ public class ListCart {
 
     private String goodsVal;
 
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    private String stock;
+
     public void setGoodsId(String goodsId){
         this.goodsId = goodsId;
     }

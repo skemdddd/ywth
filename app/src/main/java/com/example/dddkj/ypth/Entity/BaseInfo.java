@@ -1,22 +1,46 @@
 package com.example.dddkj.ypth.Entity;
 
 
-public class BaseInfo
-{
-	protected String Id;
-	protected String name;
-	protected boolean isChoosed;
+import java.io.Serializable;
 
-	public BaseInfo()
+public class BaseInfo implements Serializable
+{
+	String Id;
+	protected String name;
+	private boolean isChoosed;
+
+	public String getDeliveryMoney() {
+		return deliveryMoney;
+	}
+
+	public void setDeliveryMoney(String deliveryMoney) {
+		this.deliveryMoney = deliveryMoney;
+	}
+
+	private String   deliveryMoney;
+
+	public String getDeliveryFreeMoney() {
+		return deliveryFreeMoney;
+	}
+
+	public void setDeliveryFreeMoney(String deliveryFreeMoney) {
+		this.deliveryFreeMoney = deliveryFreeMoney;
+	}
+
+	private  String deliveryFreeMoney;
+
+	BaseInfo()
 	{
 		super();
 	}
 
-	public BaseInfo(String id, String name)
+	BaseInfo(String id, String name, String deliveryFreeMoney, String deliveryMoney)
 	{
 		super();
 		Id = id;
 		this.name = name;
+		this.deliveryFreeMoney=deliveryFreeMoney;
+		this.deliveryMoney =deliveryMoney;
 
 	}
 

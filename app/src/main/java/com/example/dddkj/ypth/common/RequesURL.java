@@ -77,4 +77,8 @@ public class RequesURL {
     public static final String CARTINSETR = URL + INDEX + "m=Customer&c=Cart&a=cartInsetr";
     //    购物车
     public static final String CARTLIST = URL + INDEX + "m=Customer&c=Cart&a=cartList";
+    //    默认地址
+    public static final String MRADDRESS = URL + INDEX + "m=Customer&c=UserAddress&a=mrAddress";
+    //    确认订单
+    public static final String ORDERADD = URL + INDEX + "m=Customer&c=Orders&a=orderAdd";
 }

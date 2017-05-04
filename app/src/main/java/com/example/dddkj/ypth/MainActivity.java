@@ -87,6 +87,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         super.onRestart();
         ShopFragment shopFragment= (ShopFragment) controller.getFragment(2);
         shopFragment.virtualData();
+
         if(Constant.isShopping()){
             shopTab_rdoBtn.setChecked(true);
             Constant.setShopping(false);

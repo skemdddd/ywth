@@ -1,19 +1,24 @@
 package com.example.dddkj.ypth.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.dddkj.ypth.Entity.GroupInfo;
 import com.example.dddkj.ypth.Entity.ProductInfo;
+import com.example.dddkj.ypth.MyApplication.MyApplication;
 import com.example.dddkj.ypth.R;
 import com.example.dddkj.ypth.Widget.SlideView;
+import com.example.dddkj.ypth.common.RequesURL;
+import com.example.dddkj.ypth.ui.MerchandiseNewsActivity;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -129,12 +134,13 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         SlideView slideView = null;
         final ChildHolder cholder;
-        DecimalFormat df   = new DecimalFormat("######0.00");
+        DecimalFormat df = new DecimalFormat("######0.00");
         if (convertView == null) {
             cholder = new ChildHolder();
             View view = View.inflate(context, R.layout.item_shopcart_product, null);
             slideView = new SlideView(context, context.getResources(), view);
             convertView = slideView;
+            cholder.item_rl = (RelativeLayout) convertView.findViewById(R.id.item_rl);
             cholder.cb_check = (CheckBox) convertView.findViewById(R.id.check_box);
             cholder.iv_adapter_list_pic = (ImageView) convertView.findViewById(R.id.iv_adapter_list_pic);
             cholder.tv_product_desc = (TextView) convertView.findViewById(R.id.tv_intro);
@@ -142,9 +148,9 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
             cholder.iv_increase = (TextView) convertView.findViewById(R.id.tv_add);
             cholder.iv_decrease = (TextView) convertView.findViewById(R.id.tv_reduce);
             cholder.tv_count = (TextView) convertView.findViewById(R.id.tv_num);
-            cholder.tv_goodsVal= (TextView) convertView.findViewById(R.id.tv_goodsVal);
+            cholder.tv_goodsVal = (TextView) convertView.findViewById(R.id.tv_goodsVal);
             cholder.tv_delete = (TextView) convertView.findViewById(R.id.back);
-            cholder.tv_type_size= (TextView) convertView.findViewById(R.id.tv_type_size);
+            cholder.tv_type_size = (TextView) convertView.findViewById(R.id.tv_type_size);
             // childrenMap.put(groupPosition, convertView);
             convertView.setTag(cholder);
         } else {
@@ -154,17 +160,17 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
         final ProductInfo product = (ProductInfo) getChild(groupPosition, childPosition);
 
         if (product != null) {
-            Glide.with(context)
-                    .load("http://www.yipintonghang.com/"+product.getImageUrl())
+            Glide.with(MyApplication.getInstance())
+                    .load(RequesURL.URL + product.getImageUrl())
                     .asBitmap()
                     .into(cholder.iv_adapter_list_pic);
             cholder.tv_product_desc.setText(product.getDesc());
             cholder.tv_goodsVal.setText(product.getGoodsVal());
-            cholder.tv_price.setText("￥" +df.format(product.getPrice()) + "");
+            cholder.tv_price.setText("￥" + df.format(product.getPrice()) + "");
             cholder.tv_count.setText(product.getCount() + "");
             cholder.cb_check.setChecked(product.isChoosed());
             cholder.tv_type_size.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            cholder.tv_type_size.setText(Double.parseDouble(product.getMarketPrice())+"");
+            cholder.tv_type_size.setText(Double.parseDouble(product.getMarketPrice()) + "");
             cholder.cb_check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -173,10 +179,21 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
                     checkInterface.checkChild(groupPosition, childPosition, ((CheckBox) v).isChecked());// 暴露子选接口
                 }
             });
+            cholder.item_rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context, MerchandiseNewsActivity.class);
+                    intent.putExtra("goodsid", product.getId());
+                    context.startActivity(intent);
+                    modifyCountInterface.unChekbox(false);
+
+                }
+            });
             cholder.iv_increase.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    modifyCountInterface.doIncrease(groupPosition, childPosition, cholder.tv_count, cholder.cb_check.isChecked());// 暴露增加接口
+                    modifyCountInterface.doIncrease(groupPosition, childPosition, cholder.tv_count, cholder.cb_check.isChecked(), product.getStock());// 暴露增加接口
                 }
             });
             cholder.iv_decrease.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +209,7 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
             public void onClick(View v) {
                 List<ProductInfo> childs = children.get(groups.get(groupPosition).getId());
                 childs.remove(childPosition);
-                if(childs.size() ==0){//child没有了，group也就没有了
+                if (childs.size() == 0) {//child没有了，group也就没有了
                     groups.remove(groupPosition);
                 }
                 notifyDataSetChanged();
@@ -203,7 +220,7 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
+        return false;
     }
 
     /**
@@ -229,6 +246,7 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
         TextView tv_delete;
         TextView tv_goodsVal;
         TextView tv_type_size;
+        RelativeLayout item_rl;
     }
 
     /**
@@ -265,7 +283,7 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
          * @param showCountView 用于展示变化后数量的View
          * @param isChecked     子元素选中与否
          */
-        public void doIncrease(int groupPosition, int childPosition, View showCountView, boolean isChecked);
+        public void doIncrease(int groupPosition, int childPosition, View showCountView, boolean isChecked, String stock);
 
         /**
          * 删减操作
@@ -276,6 +294,14 @@ public class ShopcartExpandableListViewAdapter extends BaseExpandableListAdapter
          * @param isChecked     子元素选中与否
          */
         public void doDecrease(int groupPosition, int childPosition, View showCountView, boolean isChecked);
+
+
+        /**
+         * 清空状态
+         *
+         * @param cancel
+         */
+        void unChekbox(boolean cancel);
     }
 
 }

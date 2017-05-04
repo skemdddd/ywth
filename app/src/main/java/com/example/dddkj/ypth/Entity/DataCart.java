@@ -15,6 +15,26 @@ public class DataCart {
 
     private String shopName;
 
+    public String getDeliveryFreeMoney() {
+        return deliveryFreeMoney;
+    }
+
+
+    public void setDeliveryFreeMoney(String deliveryFreeMoney) {
+        this.deliveryFreeMoney = deliveryFreeMoney;
+    }
+
+    public String getDeliveryMoney() {
+        return deliveryMoney;
+    }
+
+    public void setDeliveryMoney(String deliveryMoney) {
+        this.deliveryMoney = deliveryMoney;
+    }
+
+    private  String deliveryMoney;
+    private String deliveryFreeMoney;
+
     @SerializedName("list")
     public List<ListCart> getList() {
         return list;

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
+                android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/shopPrice" android:layout_toStartOf="@+id/shopPrice">
+        <ImageView
+            android:padding="10dp"
+            android:id="@+id/goodsImg"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+           android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/goodsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/goodsImg"
+            android:layout_toRightOf="@+id/goodsImg" android:textColor="#000000"
+            android:textSize="12sp" tools:text="海尔全新空气净化空调低价促销"/>
+        <TextView
+            android:id="@+id/goodsVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/goodsName"
+            android:layout_alignStart="@+id/goodsName"
+            android:layout_below="@+id/goodsName"
+            android:layout_marginTop="5dp" android:textColor="#9e9e9e"
+            android:textSize="11sp" tools:text="尺寸:100*170;颜色:黑色白色;风格:中国风"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:textColor="#dedede"
+        android:id="@+id/marketPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:textSize="11dp"
+        tools:text="6280.00"/>
+    <TextView
+        android:textColor="#1a1a1a"
+        android:id="@+id/goodsCnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="10dp"
+        android:textSize="10dp"
+        tools:text="*1"/>
+    <TextView
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:id="@+id/shopPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp" android:layout_marginTop="5dp"
+        tools:text="￥6280.00"/>
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/loginBackground">
+
+    </View>
+
+
+
+</RelativeLayout>

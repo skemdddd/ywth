@@ -15,15 +15,19 @@ import android.widget.Toast;
 import com.example.dddkj.ypth.Adapter.ShopcartExpandableListViewAdapter;
 import com.example.dddkj.ypth.Base.BaseFragment;
 import com.example.dddkj.ypth.Entity.GroupInfo;
+import com.example.dddkj.ypth.Entity.MrAddress;
+import com.example.dddkj.ypth.Entity.MrAddressData;
 import com.example.dddkj.ypth.Entity.ProductInfo;
 import com.example.dddkj.ypth.Entity.RootCart;
+import com.example.dddkj.ypth.Entity.SerializableHashMap;
 import com.example.dddkj.ypth.MyApplication.MyApplication;
 import com.example.dddkj.ypth.R;
 import com.example.dddkj.ypth.Widget.SuperExpandableListView;
 import com.example.dddkj.ypth.common.RequesURL;
 import com.example.dddkj.ypth.ui.EnterStoreActivity;
-import com.example.dddkj.ypth.ui.MerchandiseNewsActivity;
+import com.example.dddkj.ypth.ui.OrderGoods;
 import com.example.dddkj.ypth.utils.ProgressActivity;
+import com.example.dddkj.ypth.utils.T;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -31,6 +35,8 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
 import com.orhanobut.logger.Logger;
 
+import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,18 +67,30 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
     ProgressActivity mProgressActivity;
     View mView;
     private Context context;
+    String id;
     private double totalPrice = 0.00;// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
 
+    List<ProductInfo> orderModel;
+
     private ShopcartExpandableListViewAdapter selva;
+
+
     private List<GroupInfo> groups = new ArrayList<GroupInfo>();// 组元素数据列表
     private Map<String, List<ProductInfo>> children = new HashMap<>();// 子元素数据列表
+
+    private List<GroupInfo> groupsransmit = new ArrayList<GroupInfo>();// 组元素数据列表
+    private Map<String, List<ProductInfo>> childrenTransmit = new HashMap<>();// 子元素数据列表
+
+    private MrAddressData mMrAddressData = new MrAddressData();
+    DecimalFormat df;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         context = getActivity();
-        mView =inflater.inflate(R.layout.fragment_shop,container,false);
-        return mView ;
+        mView = inflater.inflate(R.layout.fragment_shop, container, false);
+        df = new DecimalFormat("##0.00");
+        return mView;
 
     }
 
@@ -90,7 +108,7 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
             virtualData();
         }
     }
@@ -119,13 +137,16 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
     }
 
     /**
-     * 模拟数据<br>
+     * 更新数据<br>
      * 遵循适配器的数据列表填充原则，组元素被放在一个List中，对应的组元素下辖的子元素被放在Map中，<br>
      * 其键是组元素的Id(通常是一个唯一指定组元素身份的值)
      */
     public void virtualData() {
 
-        final Gson gson =new Gson();
+        final Gson gson = new Gson();
+        cb_check_all.setChecked(false);
+        tv_go_to_pay.setText("结算(0)");
+        tv_total_price.setText("￥0.00");
         OkGo.post(RequesURL.CARTLIST)     // 请求方式和请求url
                 .tag(this)                       // 请求的 tag, 主要用于取消对应的请求
                 .params("uid", MyApplication.getInstance().getUserid())
@@ -138,14 +159,15 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                         mProgressActivity.showContent();
                         children.clear();
                         groups.clear();
-                        final RootCart root=gson.fromJson(s, RootCart.class);
-                        if(root!=null){
-                            for(int i= 0;i<root.getData().size();i++){
-                                groups.add(new GroupInfo(root.getData().get(i).getShopId(),root.getData().get(i).getShopName()));
+                        final RootCart root = gson.fromJson(s, RootCart.class);
+                        if (root != null) {
+                            for (int i = 0; i < root.getData().size(); i++) {
+
+                                groups.add(new GroupInfo(root.getData().get(i).getShopId(), root.getData().get(i).getShopName(), root.getData().get(i).getDeliveryFreeMoney(),root.getData().get(i).getDeliveryMoney()));
                                 List<ProductInfo> products = new ArrayList<>();
-                                for (int j = 0; j <root.getData().get(i).getList().size(); j++) {
-                                    products.add(new ProductInfo(root.getData().get(i).getList().get(j).getGoodsId(), "商品", root.getData().get(i).getList().get(j).getGoodsImg(),root.getData().get(i).getList().get(j).getGoodsVal(),root.getData().get(i).getList().get(j).getMarketPrice(), root.getData().get(i).getList().get(j).getGoodsName(),
-                                            Double.parseDouble(root.getData().get(i).getList().get(j).getShopPrice()) , Integer.parseInt(root.getData().get(i).getList().get(j).getGoodsCnt())));
+                                for (int j = 0; j < root.getData().get(i).getList().size(); j++) {
+                                    products.add(new ProductInfo(root.getData().get(i).getList().get(j).getGoodsId(), "商品", root.getData().get(i).getList().get(j).getGoodsImg(), root.getData().get(i).getList().get(j).getGoodsVal(), root.getData().get(i).getList().get(j).getMarketPrice(), root.getData().get(i).getList().get(j).getGoodsName(),
+                                            Double.parseDouble(root.getData().get(i).getList().get(j).getShopPrice()), Integer.parseInt(root.getData().get(i).getList().get(j).getGoodsCnt()), root.getData().get(i).getList().get(j).getStock()));
 
                                 }
                                 children.put(groups.get(i).getId(), products);
@@ -156,21 +178,12 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                             @Override
                             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
                                 Intent intent = new Intent(getActivity(), EnterStoreActivity.class);
-                                intent.putExtra("shopid",root.getData().get(i).getShopId());
+                                intent.putExtra("shopid", root.getData().get(i).getShopId());
                                 startActivity(intent);
                                 return true;
                             }
                         });
-                        exListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                            @Override
-                            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                                Logger.i("123：" + root.getData().get(i).getList().get(i1).getGoodsId());
-                                Intent intent = new Intent(getActivity(),MerchandiseNewsActivity.class);
-                                intent.putExtra("goodsid",root.getData().get(i).getList().get(i1).getGoodsId());
-                                startActivity(intent);
-                                return false;
-                            }
-                        });
+
                         if (root.getData().size() == 0) {
                             mProgressActivity.showEmpty(getResources().getDrawable(R.mipmap.sdsdds), "", "咦...购物车是空的，快去选择心爱的商品吧", new View.OnClickListener() {
                                 @Override
@@ -188,13 +201,24 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                         mProgressActivity.showLoading();
 
 
-
                     }
 
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
 
 
+                    }
+                });
+        OkGo.post(RequesURL.MRADDRESS)     // 请求方式和请求url
+                .tag(this)                       // 请求的 tag, 主要用于取消对应的请求
+                .params("uid", MyApplication.getInstance().getUserid())
+                .cacheKey("cacheKey")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        MrAddress mrAddress = gson.fromJson(s, MrAddress.class);
+                        mMrAddressData = mrAddress.getData();
                     }
                 });
 
@@ -241,13 +265,16 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
     }
 
     @Override
-    public void doIncrease(int groupPosition, int childPosition, View showCountView, boolean isChecked) {
+    public void doIncrease(int groupPosition, int childPosition, View showCountView, boolean isChecked, String stock) {
         ProductInfo product = (ProductInfo) selva.getChild(groupPosition, childPosition);
         int currentCount = product.getCount();
+        if (currentCount >= Integer.valueOf(stock)) {
+            T.showShort(getActivity(), "超出库存量" + stock);
+            return;
+        }
         currentCount++;
         product.setCount(currentCount);
         ((TextView) showCountView).setText(currentCount + "");
-
         selva.notifyDataSetChanged();
         calculate();
     }
@@ -268,6 +295,11 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
     }
 
     @Override
+    public void unChekbox(boolean cancel) {
+
+    }
+
+    @Override
     public void onClick(View v) {
         AlertDialog alert;
         switch (v.getId()) {
@@ -281,16 +313,27 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                 }
                 alert = new AlertDialog.Builder(context).create();
                 alert.setTitle("操作提示");
-                alert.setMessage("总计:\n" + totalCount + "种商品\n" + totalPrice + "元");
+                alert.setMessage("总计:\n" + totalCount + "种商品\n" + df.format(totalPrice) + "元");
                 alert.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         return;
                     }
                 });
-                alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener(){
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        SerializableHashMap myMap = new SerializableHashMap();
+                        Intent intent = new Intent(getActivity(), OrderGoods.class);
+                        myMap.setMap(childrenTransmit);
+                        intent.putExtra("list", myMap);
+                        intent.putExtra("order", (Serializable) groupsransmit);
+                        intent.putExtra("address", mMrAddressData);
+                        intent.putExtra("totalPrice", df.format(totalPrice));
+                        Logger.i("totalPrice" + tv_total_price.getText());
+                        totalPrice = 0.00;
+                        totalCount = 0;
+                        startActivity(intent);
                         return;
                     }
                 });
@@ -312,8 +355,7 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                 });
                 alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
+                    public void onClick(DialogInterface dialog, int which) {
                         doDelete();
                     }
                 });
@@ -352,7 +394,9 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
         calculate();
     }
 
-    /** 全选与反选 */
+    /**
+     * 全选与反选
+     */
     private void doCheckAll() {
         for (int i = 0; i < groups.size(); i++) {
             groups.get(i).setChoosed(cb_check_all.isChecked());
@@ -375,18 +419,34 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
     private void calculate() {
         totalCount = 0;
         totalPrice = 0.00;
+        childrenTransmit.clear();
+        groupsransmit.clear();
         for (int i = 0; i < groups.size(); i++) {
+            orderModel = new ArrayList<>();
             GroupInfo group = groups.get(i);
             List<ProductInfo> childs = children.get(group.getId());
             for (int j = 0; j < childs.size(); j++) {
                 ProductInfo product = childs.get(j);
                 if (product.isChoosed()) {
+                    id = groups.get(i).getId();
                     totalCount++;
                     totalPrice += product.getPrice() * product.getCount();
+                    orderModel.add(product);
+                }
+
+            }
+
+            if (orderModel.size() != 0) {
+                childrenTransmit.put(id, orderModel);
+                if (id.equals(groups.get(i).getId())) {
+                    groupsransmit.add(group);
                 }
             }
+
+
         }
-        tv_total_price.setText("￥" + totalPrice);
+
+        tv_total_price.setText("￥" + df.format(totalPrice)+"");
         tv_go_to_pay.setText("去支付(" + totalCount + ")");
     }
 

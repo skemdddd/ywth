@@ -18,9 +18,10 @@ import com.example.dddkj.ypth.R;
 
 public class Titlebar extends RelativeLayout {
     private ImageView iv;
-    private TextView  tv;
+    private TextView tv;
     private ImageView seek;
     private ImageView im;
+
 
 
     public Titlebar(Context context) {
@@ -29,9 +30,9 @@ public class Titlebar extends RelativeLayout {
 
     public Titlebar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.title,this,true);
-        iv= (ImageView) findViewById(R.id.title_back);
-        tv= (TextView) findViewById(R.id.title_text);
+        LayoutInflater.from(context).inflate(R.layout.title, this, true);
+        iv = (ImageView) findViewById(R.id.title_back);
+        tv = (TextView) findViewById(R.id.title_text);
         seek = (ImageView) findViewById(R.id.seekimage);
         im = (ImageView) findViewById(R.id.iminage);
 
@@ -39,39 +40,43 @@ public class Titlebar extends RelativeLayout {
 
 
     /**
-     *
      * 隐藏
+     *
      * @param nem
      */
-    public void setVisibilityHide(String nem){
-        if(nem.equals("seek")){
+    public void setVisibilityHide(String nem) {
+        if (nem.equals("seek")) {
             seek.setVisibility(GONE);
-        }else if (nem.equals("im")){
+        } else if (nem.equals("im")) {
             im.setVisibility(GONE);
-        }else{
+        } else {
             seek.setVisibility(GONE);
             im.setVisibility(GONE);
         }
 
 
     }
+
     /**
-     *
      * 文字增加
+     *
      * @param text
      */
-    public void setText(String text){
+    public void setText(String text) {
         tv.setText(text);
     }
 
-   public interface TitleBarClickListener{
+    public interface TitleBarClickListener {
         void onim();
+
         void Onseek();
+
         void Onback();
     }
-    public void setOnTitleBarClickListener(final TitleBarClickListener onButtonClickListener){
-        if(onButtonClickListener !=null){
-            if(iv !=null){
+
+    public void setOnTitleBarClickListener(final TitleBarClickListener onButtonClickListener) {
+        if (onButtonClickListener != null) {
+            if (iv != null) {
                 iv.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -81,7 +86,7 @@ public class Titlebar extends RelativeLayout {
 
                 });
             }
-            if(seek!=null){
+            if (seek != null) {
                 seek.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -89,7 +94,7 @@ public class Titlebar extends RelativeLayout {
                     }
                 });
             }
-            if(im!=null){
+            if (im != null) {
                 im.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {

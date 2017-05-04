@@ -32,5 +32,6 @@ public interface SKUInterface {
      */
     void uncheckAttribute(String[] attr);
 
+
     void uncheckAttribute(boolean empty);
 }

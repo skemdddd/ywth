@@ -1,7 +1,9 @@
 package com.example.dddkj.ypth.Entity;
 
 
-public class ProductInfo extends BaseInfo
+import java.io.Serializable;
+
+public class ProductInfo extends BaseInfo implements Serializable
 {
 	public String getGoodsVal() {
 		return goodsVal;
@@ -23,8 +25,12 @@ public class ProductInfo extends BaseInfo
 	private String goodsVal;
 	private String imageUrl;
 	private String desc;
+	private String stock;
+
+
 	private double price;
 	private int count;
+
 	private int position;// 绝对位置，只在ListView构造的购物车中，在删除时有效
 
 	public ProductInfo()
@@ -32,7 +38,7 @@ public class ProductInfo extends BaseInfo
 		super();
 	}
 
-	public ProductInfo(String id, String name, String imageUrl, String goodsVal, String marketPrice, String desc, double price, int count)
+	public ProductInfo(String id, String name, String imageUrl, String goodsVal, String marketPrice, String desc, double price, int count,String stock)
 	{
 
 		super.Id = id;
@@ -43,9 +49,17 @@ public class ProductInfo extends BaseInfo
 		this.count = count;
 		this.goodsVal =goodsVal;
 		this.marketPrice= marketPrice;
-	
-	}
+		this.stock =stock;
 
+
+
+	}
+	public String getStock() {
+		return stock;
+	}
+	public void setStock(String stock) {
+		this.stock = stock;
+	}
 	public String getImageUrl()
 	{
 		return imageUrl;

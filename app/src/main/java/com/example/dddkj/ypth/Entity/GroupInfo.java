@@ -1,15 +1,17 @@
 package com.example.dddkj.ypth.Entity;
 
-public class GroupInfo extends BaseInfo
+import java.io.Serializable;
+
+public class GroupInfo extends BaseInfo implements Serializable
 {
 	public GroupInfo()
 	{
 		super();
 	}
 
-	public GroupInfo(String id, String name)
+	public GroupInfo(String id, String name,String deliveryFreeMoney,String deliveryMoney)
 	{
-		super(id, name);
+		super(id, name,deliveryFreeMoney,deliveryMoney);
 	}
 
 }
