@@ -77,4 +77,5 @@ dependencies {
     compile 'ren.qinc.numberbutton:numberbutton:0.0.1'
     compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+    compile 'io.github.mayubao:pay_library:1.0.1'
 }

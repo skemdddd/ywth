@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -27,10 +28,11 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 	protected Context mContext;
 	private ConnectivityManager manager;
-
+	FragmentManager fManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 锁定竖屏
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			Window window = getWindow();

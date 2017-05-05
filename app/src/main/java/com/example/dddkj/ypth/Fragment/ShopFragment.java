@@ -163,7 +163,7 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                         if (root != null) {
                             for (int i = 0; i < root.getData().size(); i++) {
 
-                                groups.add(new GroupInfo(root.getData().get(i).getShopId(), root.getData().get(i).getShopName(), root.getData().get(i).getDeliveryFreeMoney(),root.getData().get(i).getDeliveryMoney()));
+                                groups.add(new GroupInfo(root.getData().get(i).getShopId(), root.getData().get(i).getShopName(), root.getData().get(i).getDeliveryFreeMoney(), root.getData().get(i).getDeliveryMoney()));
                                 List<ProductInfo> products = new ArrayList<>();
                                 for (int j = 0; j < root.getData().get(i).getList().size(); j++) {
                                     products.add(new ProductInfo(root.getData().get(i).getList().get(j).getGoodsId(), "商品", root.getData().get(i).getList().get(j).getGoodsImg(), root.getData().get(i).getList().get(j).getGoodsVal(), root.getData().get(i).getList().get(j).getMarketPrice(), root.getData().get(i).getList().get(j).getGoodsName(),
@@ -209,6 +209,7 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
 
                     }
                 });
+
         OkGo.post(RequesURL.MRADDRESS)     // 请求方式和请求url
                 .tag(this)                       // 请求的 tag, 主要用于取消对应的请求
                 .params("uid", MyApplication.getInstance().getUserid())
@@ -217,10 +218,12 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        Logger.json(s);
                         MrAddress mrAddress = gson.fromJson(s, MrAddress.class);
                         mMrAddressData = mrAddress.getData();
                     }
                 });
+
 
     }
 
@@ -311,33 +314,17 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
                     Toast.makeText(context, "请选择要支付的商品", Toast.LENGTH_LONG).show();
                     return;
                 }
-                alert = new AlertDialog.Builder(context).create();
-                alert.setTitle("操作提示");
-                alert.setMessage("总计:\n" + totalCount + "种商品\n" + df.format(totalPrice) + "元");
-                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        return;
-                    }
-                });
-                alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SerializableHashMap myMap = new SerializableHashMap();
-                        Intent intent = new Intent(getActivity(), OrderGoods.class);
-                        myMap.setMap(childrenTransmit);
-                        intent.putExtra("list", myMap);
-                        intent.putExtra("order", (Serializable) groupsransmit);
-                        intent.putExtra("address", mMrAddressData);
-                        intent.putExtra("totalPrice", df.format(totalPrice));
-                        Logger.i("totalPrice" + tv_total_price.getText());
-                        totalPrice = 0.00;
-                        totalCount = 0;
-                        startActivity(intent);
-                        return;
-                    }
-                });
-                alert.show();
+                SerializableHashMap myMap = new SerializableHashMap();
+                Intent intent = new Intent(getActivity(), OrderGoods.class);
+                myMap.setMap(childrenTransmit);
+                intent.putExtra("list", myMap);
+                intent.putExtra("order", (Serializable) groupsransmit);
+                intent.putExtra("address", mMrAddressData);
+                intent.putExtra("totalPrice", df.format(totalPrice));
+                Logger.i("totalPrice" + tv_total_price.getText());
+                totalPrice = 0.00;
+                totalCount = 0;
+                startActivity(intent);
                 break;
             case R.id.tv_delete:
                 if (totalCount == 0) {
@@ -446,7 +433,7 @@ public class ShopFragment extends BaseFragment implements ShopcartExpandableList
 
         }
 
-        tv_total_price.setText("￥" + df.format(totalPrice)+"");
+        tv_total_price.setText("￥" + df.format(totalPrice) + "");
         tv_go_to_pay.setText("去支付(" + totalCount + ")");
     }
 

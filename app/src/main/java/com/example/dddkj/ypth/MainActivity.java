@@ -2,6 +2,7 @@ package com.example.dddkj.ypth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -49,6 +50,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void setListener() {

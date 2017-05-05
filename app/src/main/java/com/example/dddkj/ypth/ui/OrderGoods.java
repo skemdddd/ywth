@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dddkj.ypth.Adapter.OrderGoodsAdapter;
@@ -21,6 +22,7 @@ import com.example.dddkj.ypth.MyApplication.MyApplication;
 import com.example.dddkj.ypth.R;
 import com.example.dddkj.ypth.Widget.Titlebar;
 import com.example.dddkj.ypth.common.RequesURL;
+import com.example.dddkj.ypth.utils.T;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -59,6 +61,12 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
     Titlebar title;
     @BindView(R.id.confirm_order_btn)
     Button confirm_order_btn;
+    @BindView(R.id.addressAdmin_tv)
+    TextView addressAdmin_tv;
+    @BindView(R.id.edit_address_rl)
+    RelativeLayout edit_address_rl;
+    @BindView(R.id.site_tv)
+    TextView site_tv;
     SerializableHashMap children;
     OrderGoodsAdapter mOrderGoodsAdapter;
     private Map<String, List<ProductInfo>> childrenTransmit = new HashMap<>();
@@ -92,7 +100,8 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
         groupsransmit = (List<GroupInfo>) intent.getSerializableExtra("order");
         mrAddressData = (MrAddressData) intent.getSerializableExtra("address");
         childrenTransmit = children.getMap();
-        totalPricea=Double.parseDouble(intent.getStringExtra("totalPrice"));
+        totalPricea = Double.parseDouble(intent.getStringExtra("totalPrice"));
+
 //       店铺id
         List<String> shopid = new ArrayList<>();
         for (int i = 0; i < groupsransmit.size(); i++) {
@@ -107,7 +116,7 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
         address_tv.setText(mrAddressData.getCityAddress());
         Logger.i("id" + groupsransmit.size());
 //      商品信息
-
+        ShowHiden(utel_tv);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
@@ -118,6 +127,18 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
 
 
     }
+
+    public void ShowHiden(TextView textView) {
+        if (textView.getText().equals("")) {
+            addressAdmin_tv.setVisibility(View.VISIBLE);
+            site_tv.setVisibility(View.GONE);
+        } else {
+            addressAdmin_tv.setVisibility(View.GONE);
+            site_tv.setVisibility(View.VISIBLE);
+        }
+
+    }
+
 
     @Override
     protected void setListener() {
@@ -139,6 +160,7 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
             }
         });
         confirm_order_btn.setOnClickListener(this);
+        edit_address_rl.setOnClickListener(this);
     }
 
     @Override
@@ -156,13 +178,36 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
         switch (v.getId()) {
             case R.id.confirm_order_btn:
                 dataZprice = new DataZprice();
-                Submit();
+                if(mrAddressData.getAdrId()==null){
+                    T.showShort(this,"请增加收货地址");
+                }else{
+                    Submit();
+                }
+
                 break;
+            case R.id.edit_address_rl:
+                Intent intent = new Intent(this, DeliveryAddrssActivity.class);
+                startActivityForResult(intent, 1);
+
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            mrAddressData = (MrAddressData) data.getSerializableExtra("address");
+            useName_tv.setText(mrAddressData.getUName());
+            utel_tv.setText(mrAddressData.getUTel());
+            address_tv.setText(mrAddressData.getCityAddress());
+            ShowHiden(utel_tv);
+        }
+
+
+    }
+
     public void Submit() {
-        Logger.i("123" + zprice);
         for (int i = 0; i < mEditText.size(); i++) {
             content.add(mEditText.get(i).getText().toString());
 
@@ -177,12 +222,11 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
         dataZprice.setZprice(zprice);
         dataZprice.setContent(content);
         dataZprice.setGoodsPrice(goodsPrice);
-        String aa = mGson.toJson(dataZprice);
-        Logger.i("123" + aa);
+//        上传确认订单
         OkGo.post(RequesURL.ORDERADD)
                 .tag(this)
 //                .upJson(jsonObject.toString())
-                .params("id", mGson.toJson(dataZprice))
+                .params("order", mGson.toJson(dataZprice))
                 .cacheKey("cacheKey")
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(new StringCallback() {
@@ -190,6 +234,8 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
                     public void onSuccess(String s, Call call, Response response) {
                         Logger.json(s);
                         Logger.i("json" + s);
+                        Intent intent = new Intent(OrderGoods.this,PaymentType.class);
+                        startActivity(intent);
                     }
                 });
         content.clear();
@@ -204,15 +250,13 @@ public class OrderGoods extends BaseActivity implements OrderInterface {
     @Override
     public void yunfei(String yunfei) {
         this.yunfei.add(yunfei);
-        totalPricea+=Double.parseDouble(yunfei);
-        totalPrice_tv.setText("合计 : "+"￥"+totalPricea+"");
+        totalPricea += Double.parseDouble(yunfei);
+        totalPrice_tv.setText("合计 : " + "￥" + totalPricea + "");
     }
 
     @Override
     public void goodsNum(String goodsNum) {
         this.goodsNum.add(goodsNum);
-
-
     }
 
     @Override

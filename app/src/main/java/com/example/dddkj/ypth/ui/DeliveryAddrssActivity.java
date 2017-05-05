@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.dddkj.ypth.Adapter.DeliveryAddressAdapter;
 import com.example.dddkj.ypth.Base.BaseActivity;
 import com.example.dddkj.ypth.Entity.AddressList;
+import com.example.dddkj.ypth.Entity.MrAddress;
+import com.example.dddkj.ypth.Entity.MrAddressData;
 import com.example.dddkj.ypth.Entity.SelectedBean;
 import com.example.dddkj.ypth.MyApplication.MyApplication;
 import com.example.dddkj.ypth.R;
@@ -21,6 +23,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,7 @@ public class DeliveryAddrssActivity extends BaseActivity {
     TextView add_address_tv;
     @BindView(R.id.title_back)
     ImageView title_back;
-
+    private MrAddressData mMrAddressData ;
     public ProgressActivity getProgressActivity() {
         return mProgressActivity;
     }
@@ -86,6 +89,8 @@ public class DeliveryAddrssActivity extends BaseActivity {
     }
 
     public void Submit() {
+        final Gson gson = new Gson();
+        mMrAddressData = new MrAddressData();
         OkGo.post(RequesURL.SHIPPINGADDRESSMANAGEMENT)
                 .tag(this)
                 .params("uid", MyApplication.getInstance().getUserid())
@@ -103,7 +108,7 @@ public class DeliveryAddrssActivity extends BaseActivity {
                     public void onAfter(String s, Exception e) {
                         super.onAfter(s, e);
                         mProgressActivity.showContent();
-                        Gson gson = new Gson();
+
                         List<SelectedBean> datas = new ArrayList<>();
                         final AddressList addressList = gson.fromJson(s, AddressList.class);
                         for (int i = 0; i < addressList.getData().size(); i++) {
@@ -130,6 +135,20 @@ public class DeliveryAddrssActivity extends BaseActivity {
                     }
                 });
 
+        OkGo.post(RequesURL.MRADDRESS)     // 请求方式和请求url
+                .tag(this)                       // 请求的 tag, 主要用于取消对应的请求
+                .params("uid", MyApplication.getInstance().getUserid())
+                .cacheKey("cacheKey")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        Logger.json(s);
+                        MrAddress mrAddress = gson.fromJson(s, MrAddress.class);
+                        mMrAddressData = mrAddress.getData();
+                    }
+                });
+
     }
 
     @Override
@@ -145,9 +164,27 @@ public class DeliveryAddrssActivity extends BaseActivity {
                 startActivityForResult(intent, 1);
                 break;
             case R.id.title_back:
+                if(mDeliveryAddressAdapter.getItemCount()==0){
+                    mMrAddressData = new MrAddressData();
+                }
+                Intent intenta =new Intent();
+                intenta.putExtra("address", mMrAddressData);
+                setResult(RESULT_OK, intenta);
                 MyApplication.getInstance().finishActivity(this);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDeliveryAddressAdapter.getItemCount()==0){
+            mMrAddressData = new MrAddressData();
+        }
+        Intent intenta =new Intent();
+        intenta.putExtra("address", mMrAddressData);
+        setResult(RESULT_OK, intenta);
+        super.onBackPressed();
+
     }
 
     @Override
